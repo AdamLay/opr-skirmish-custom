@@ -14,9 +14,7 @@ interface RuleListProps {
 const attackRules = ["Impact"];
 
 export default function RuleList({ unit, specialRules }: RuleListProps) {
-  const { rules, listResponse, attackMultiplier, halfRange } = useAppStore(
-    useShallow((state) => state)
-  );
+  const { rules, listResponse, attackMultiplier, halfRange } = useAppStore(useShallow((state) => state));
   const ruleDefinitions = rules.concat(listResponse?.specialRules ?? []).map((x) => ({
     ...x,
     description: transformRuleText(x.description, attackMultiplier, halfRange),
@@ -34,13 +32,11 @@ export default function RuleList({ unit, specialRules }: RuleListProps) {
         )[0];
 
         const name = rule.name;
-        const rating = attackRules.includes(rule.name)
-          ? rule.rating * attackMultiplier
-          : rule.rating;
+        const rating = attackRules.includes(rule.name) ? rule.rating * attackMultiplier : rule.rating;
 
-        const label = `${
-          unit && rule.count && rule.count !== unit.size ? `${rule.count}x ` : ""
-        }${name}${rating ? `(${rating})` : ""}`;
+        const label = `${unit && rule.count && rule.count !== unit.size ? `${rule.count}x ` : ""}${name}${
+          rating ? `(${rating})` : ""
+        }`;
 
         const description =
           (rule.rating ? `${name}(X)` : name) +
@@ -69,10 +65,7 @@ const groupRules = (rules: SpecialRule[], forceStack: boolean = false) => {
       !rule.rating || isNaN(parseInt(rule.rating as string))
         ? null
         : stack
-        ? group.reduce(
-            (total, next) => (next.rating ? total + parseInt(next.rating as any) : total),
-            0
-          )
+        ? group.reduce((total, next) => (next.rating ? total + parseInt(next.rating as any) : total), 0)
         : Math.max(...group.map((rule) => parseInt(rule.rating as any)));
     return {
       ...rule,

@@ -1,6 +1,6 @@
 "use client";
 import Head from "next/head";
-import { CircularProgress, Container, ThemeProvider } from "@mui/material";
+import { CircularProgress, Container, Stack, ThemeProvider, Typography } from "@mui/material";
 import ListView from "@/components/ListView";
 import { theme } from "@/theme";
 import Settings from "@/components/Settings";
@@ -13,6 +13,15 @@ import { useShallow } from "zustand/shallow";
 export default function List() {
   const router = useRouter();
   const store = useAppStore(useShallow((state) => state));
+
+  const { listResponse, unitSizeMultipliers } = store;
+
+  const armyPtsTotal = listResponse?.units
+    .map((x) => {
+      const sizeMultiplier = unitSizeMultipliers.find((m) => m.unitId === x.selectionId)?.multiplier || 1;
+      return x.cost * sizeMultiplier;
+    })
+    .reduce((acc, curr) => acc + curr, 0);
 
   useEffect(() => {
     if (router.isReady) {
@@ -34,8 +43,11 @@ export default function List() {
       </Head>
       <ThemeProvider theme={theme}>
         <Container sx={{ pt: 2 }}>
-          <Settings />
           {store.loading && <CircularProgress />}
+          <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+            <Settings />
+            <Typography variant="h5">List total: {armyPtsTotal}pts</Typography>
+          </Stack>
           <ListView />
         </Container>
       </ThemeProvider>

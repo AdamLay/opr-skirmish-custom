@@ -5,7 +5,7 @@ import { useShallow } from "zustand/shallow";
 export default function Settings() {
   const store = useAppStore(useShallow((state) => state));
   return (
-    <Stack direction="row" spacing={2} mb={1}>
+    <Stack direction="row" spacing={2}>
       <Stack>
         <Typography variant="body2" fontWeight="bold">
           Attack Multiplier

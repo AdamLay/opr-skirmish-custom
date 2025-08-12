@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CustomTooltip } from "./CustomTooltip";
+import { CustomTooltip } from "../CustomTooltip";
 
 interface RuleItemProps {
   label: string;
