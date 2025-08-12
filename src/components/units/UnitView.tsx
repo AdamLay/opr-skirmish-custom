@@ -114,10 +114,10 @@ export default function UnitView({ unit }: { unit: Unit }) {
                 <RuleList unit={unit} specialRules={unit.rules.filter((x) => x.name !== "Tough")} />
               </Box>
               {orderBy(unit.loadout, "type", "desc").map((x, i) => (
-                <LoadoutItemDisplay key={i} entry={x} unitId={unit.id} />
+                <LoadoutItemDisplay key={i} entry={x} unitId={unit.selectionId} />
               ))}
               {upgradeRules.map((x, i) => (
-                <LoadoutItemDisplay key={i} entry={x} unitId={unit.id} />
+                <LoadoutItemDisplay key={i} entry={x} unitId={unit.selectionId} />
               ))}
             </Stack>
           </Stack>
